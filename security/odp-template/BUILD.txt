@@ -1,0 +1,7 @@
+Build process
+
+Download the binary file from the package github package
+untar it
+compile it using the suggested compiler on github package
+build it as suggested
+if any error reported, report it in developer channel of package github

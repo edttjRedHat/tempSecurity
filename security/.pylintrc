@@ -1,0 +1,10 @@
+[MASTER]
+;init-hook='import security.test.pylint_init as pylint_init; del pylint_init'
+
+[MESSAGES CONTROL]
+
+disable=fixme, too-many-arguments, useless-import-alias, logging-fstring-interpolation, unspecified-encoding, consider-using-with, missing-timeout
+
+[SIMILARITIES]
+
+min-similarity-lines=10

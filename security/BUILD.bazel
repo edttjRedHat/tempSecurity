@@ -1,0 +1,90 @@
+load("@security_py_deps//:requirements.bzl", security_requirements = "all_requirements")
+load("@tcx_test_automation_common_py_deps//:requirements.bzl", common_requirement = "requirement")
+load("//tools/build_rules:python_linters.bzl", "flake8_test", "pylint_test")
+
+package(default_visibility = ["//visibility:public"])
+
+# Main
+
+MAIN_SRCS = glob(
+    [
+        "**/*.py",
+    ],
+    exclude = [
+        "test/**/*.py",
+    ],
+)
+
+MAIN_DEPS = security_requirements + [
+    common_requirement("requests"),
+]
+
+TEST_SRCS = glob(
+    [
+        "test/**/*.py",
+    ],
+    exclude = [
+        "test/pylint_init.py",
+    ],
+)
+
+TEST_DEPS = [
+    common_requirement("pytest"),
+    common_requirement("pytest-cov"),
+]
+
+# Lint
+
+flake8_test(
+    name = "flake8_main_sources",
+    srcs = MAIN_SRCS,
+)
+
+flake8_test(
+    name = "flake8_test_sources",
+    srcs = TEST_SRCS,
+)
+
+pylint_test(
+    name = "pylint_main_sources",
+    srcs = MAIN_SRCS,
+    data = [":test/pylint_init.py"],
+    imports = [
+        ".",
+    ],
+    pylint_rc_file = ".pylintrc",
+    deps = MAIN_DEPS,
+)
+
+pylint_test(
+    name = "pylint_test_sources",
+    srcs = TEST_SRCS,
+    pylint_rc_file = "test/.pylintrc",
+    deps = TEST_DEPS + MAIN_DEPS,
+)
+
+test_suite(
+    name = "lint",
+    tests = [
+        ":flake8_main_sources",
+        ":flake8_test_sources",
+        ":pylint_main_sources",
+        ":pylint_test_sources",
+    ],
+)
+
+# Unit Tests
+
+py_test(
+    name = "unittests",
+    size = "small",
+    srcs = TEST_SRCS + MAIN_SRCS,
+    data = [
+        "//:tools/common/pytest-cov/.coveragerc",
+    ],
+    imports = [
+        ".",
+    ],
+    main = "test/security_test_suite.py",
+    deps = TEST_DEPS + MAIN_DEPS,
+)

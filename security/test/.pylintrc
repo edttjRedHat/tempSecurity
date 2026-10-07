@@ -1,0 +1,17 @@
+[MASTER]
+;init-hook='import security.test.pylint_init as pylint_init; del pylint_init'
+
+[FORMAT]
+max-module-lines=2000
+
+[MESSAGES CONTROL]
+
+disable=blacklisted-name, fixme, invalid-name, missing-docstring, no-member, protected-access, too-many-statements, too-many-arguments, line-too-long, multiple-statements, consider-using-with, relative-beyond-top-level, import-outside-toplevel
+
+
+[SIMILARITIES]
+
+# Ignore imports when computing similarities.
+ignore-imports=yes
+
+min-similarity-lines=15

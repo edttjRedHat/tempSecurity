@@ -1,0 +1,8 @@
+Installation
+
+tar xf <package.tar.gz>
+copy or untar the package to the service libraries location
+compile the package
+make the package
+install it
+if any error reported check the package github site for troubleshooting.

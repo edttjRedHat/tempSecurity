@@ -1,0 +1,4 @@
+--index-url https://packages.vcfd.broadcom.net/artifactory/api/pypi/pypi-virtual/simple
+blackduck
+coreapi
+Jinja2>=3.1.2
